@@ -1,0 +1,64 @@
+#we use clerk for authentication 
+
+(package.json):
+#we are using lucid react to show icons
+
+#we are using react-hot-toast for toast notification(A toast notification is a small, temporary message that pops up on a screen to give users brief feedback about an action)
+
+#react-router-doms = to navigate the pages
+
+#also using this in frontend = A favicon.ico file displays a tiny brand logo or icon next to a website's title in a web browser tab, bookmark bar, or search result, helping users easily identify and navigate between multiple open web pages.
+
+#in assets.js - we added some dummy data in frontend
+
+#in the outlet<> in layout.jsx , we can display different pages,
+but we have to hide these all pages if user is not logged in, for that we are importing clerk in this file
+we are using if condition above those pages/outlet command for authentication checking
+
+#we imported user button of clerk (provided by clerk) in navbar.jsx coz vo website me jo clerk ki sign ka user button hai na top right me vohi h vo jisse se apan signout and manage kar sakte
+
+#we imported cors in server.js 
+didnt knew what cors is , so = In simple terms, CORS controls whether a frontend running on one origin is allowed to request data from a backend running on another origin.
+
+#installed clerk in backend i.i. in express 
+
+#why we do app.use() in server.js, whats that app actually do
+= app is basically your Express application/server object.
+Express gives you an object containing methods that let you configure your server.
+For example:
+app.use(cors());
+app.use(express.json());
+
+Think:
+
+                    Express App
+                        │
+        ┌───────────────┼───────────────┐
+        ↓               ↓               ↓
+    cors()         express.json()    your routes
+    middleware       middleware
+
+#we are using neon for - Neon provides you a PostgreSQL database in the cloud.
+its a serverless postgres database 
+Instead of installing PostgreSQL on your own laptop, you create a database on Neon and get a connection to it. - basically postgres install karne ke jagah pe neon is providing u the same thing 
+
+#Prisma is an ORM (Object-Relational Mapper).
+Its job is to make it easier for your JavaScript/Node.js code to talk to your PostgreSQL database.
+
+#what does config folder usually contains in dev project
+A config folder usually contains configuration/setup code for your application — things that tell your app how to connect to or behave with external services.
+
+#why inngest =  Inngest handles Clerk events in the background and reliably syncs user data with our database.
+But isn't that just a webhook?
+Clerk → your server webhook can also accomplish this.
+The difference is that Inngest gives you infrastructure around the event:
+Retries if your function fails
+Background/asynchronous execution
+Event handling
+Better reliability for longer-running work
+Ability to chain multiple steps/functions
+Monitoring of function executions
+
+#and vercel - obv for deployment
+
+#Axios = a tool/library for making HTTP requests between your frontend and backend.
