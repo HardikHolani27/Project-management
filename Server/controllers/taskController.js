@@ -23,17 +23,24 @@ export const createTask = async (req, res) => {
                 return res.status(403).json({ message: "assignee is not a member of the project / workspace"})
             }
 
-            const task = await prisma.task.create({
-                data: {
-                    projectId,
-                    title,
-                    description,
-                    priority,
-                    assigneeId,
-                    status,
-                    due_date: new Date(due_date)
-                }
-            })
+           const task = await prisma.task.create({
+    data: {
+        title,
+        description,
+        priority,
+        status,
+        type,
+        due_date: new Date(due_date),
+        project: {
+            connect: { id: projectId }
+        },
+        ...(assigneeId && {
+            assignee: {
+                connect: { id: assigneeId }
+            }
+        })
+    }
+})
 
             const taskWithAssignee = await prisma.task.findUnique({
                 where: {id: task.id},
@@ -95,7 +102,7 @@ export const deleteTask = async (req, res) => {
         const {userId} = await req.auth();
         const {taskIds} = req.body
         const tasks = await prisma.task.findMany({
-            where: {id: {in: tasksIds}}
+            where: {id: {in: taskIds}}
         })
 
         if(tasks.length === 0){
@@ -115,7 +122,7 @@ export const deleteTask = async (req, res) => {
             }
 
             await prisma.task.deleteMany({
-                where: {id: {in: tasksIds}}
+                where: {id: {in: taskIds}}
             })
 
             res.json({message: "Task updated successfully" })

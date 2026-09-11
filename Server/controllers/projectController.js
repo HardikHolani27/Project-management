@@ -4,7 +4,7 @@ import prisma from "../configs/prisma.js";
 export const createProject = async (req, res) => {
     try{
         const {userId} = await req.auth();
-        const {workspaceId, description, name, status, start_date, end_date,
+        const {id, workspaceId, description, name, status, start_date, end_date,
             team_members, team_lead, progress, priority} = req.body;
 
             //check if user has admin role for workspace 
@@ -36,7 +36,7 @@ export const createProject = async (req, res) => {
                     priority,
                     progress,
                     team_lead: teamlead?.id,
-                    start_date: start_datae ? new Date(start_date) : null,
+                    start_date: start_date ? new Date(start_date) : null,
                     end_date: end_date ? new Date(end_date) : null,
                 }
             })
@@ -79,7 +79,7 @@ export const createProject = async (req, res) => {
 export const updateProject = async (req, res) => {
     try{
         const { userId } = await req.auth();
-        const {workspaceId, description, name, status, start_date, end_date,
+        const {id, workspaceId, description, name, status, start_date, end_date,
         team_members, team_lead, progress, priority} = req.body;
 
         //check if user has admin role for workspace 
@@ -129,7 +129,7 @@ export const updateProject = async (req, res) => {
 //Add Member to Project
 export const addMember = async (req, res) => {
     try{
-        const { userId } = await res.auth();
+        const { userId } = await req.auth();
         const { projectId } = req.params;
         const { email } = req.body;
 
@@ -162,7 +162,7 @@ export const addMember = async (req, res) => {
 
         const member = await prisma.projectMember.create({
             data: {
-                userId: user_id,
+                userId: user.id,
                 projectId
             }
         })
